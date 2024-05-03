@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node.js Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Node.js Calculator</h1>
+  <form id="calculatorForm">
+    <input type="number" name="num1" placeholder="Enter first number" required><br>
+    <input type="number" name="num2" placeholder="Enter second number" required><br>
+    <select name="operator" required>
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="*">*</option>
+      <option value="/">/</option>
+    </select><br>
+    <button type="submit">Calculate</button>
+  </form>
+  <div id="result"></div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#calculatorForm').submit(function(event) {
+        event.preventDefault();
+        const formData = $(this).serialize();
+        $.ajax({
+          type: 'POST',
+          url: '/calculate',
+          data: formData,
+          success: function(response) {
+            $('#result').text('Result: ' + response.result);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

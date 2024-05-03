@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    stages {
+
+          stage("Code Checkout") {
+            steps {
+                echo "Cloning the code"
+                git url: "https://github.com/umahanty/Nodejs-Calculator.git", branch: "main"
+            }
+        }
+
+        stage("Build Docker Image") {
+            steps {
+                echo "Building the image"
+                catchError(buildResult: 'UNSTABLE') {
+                    sh "docker build -t calapp ."
+                }
+            }
+        }
+
+	stage("Deploy") {
+            steps {
+                echo "Deploying to container"
+                catchError(buildResult: 'UNSTABLE') {
+                    sh "docker run -d -p 3000:3000 calapp"
+                    // Add a delay to allow the container to start up completely
+                    sleep 30
+                }
+            }
+        }
+
+
+	stage("Selenium Test") {
+            steps {
+                echo "Running Selenium tests"
+		sh 'node testcase.js'
+            }
+        }
+  
+     }  
+}
