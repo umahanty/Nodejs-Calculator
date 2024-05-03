@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  become: true
+  var:
+    #variable needed during node install
+    ansible_become_pass: Rajraviojha
+    var_node: /tem
+  roles:
+    - prerequisites
+    - nodejs

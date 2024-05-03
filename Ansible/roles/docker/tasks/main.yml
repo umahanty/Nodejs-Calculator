@@ -1,0 +1,38 @@
+---
+- name: Install Docker and set permissions
+
+  tasks:
+    - name: Install Docker dependencies
+      package:
+        name: ['apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common']
+        state: present
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        state: present
+
+    - name: Install Docker
+      package:
+        name: docker-ce
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Set permissions for /var/run/docker.sock
+      file:
+        path: /var/run/docker.sock
+        mode: '0666'
+      become: yes
+
+
+# tasks file for docker

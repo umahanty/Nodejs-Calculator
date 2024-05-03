@@ -1,0 +1,51 @@
+---
+---
+- name: Install Chrome and ChromeDriver
+  tasks:
+    - name: Install unzip
+      apt:
+        name: unzip
+        state: present
+
+- name: Download Chrome
+    get_url:
+	url: https://storage.googleapis.com/chrome-for-testing-public/124.0.6367.91/linux64/chrome-linux64.zip
+        dest: /tmp/chrome-linux64.zip
+
+
+- name: Unzip Chrome
+    unarchive:
+        src: /tmp/chrome-linux64.zip
+        dest: /tmp
+
+- name: Add Chrome repository
+     lineinfile:
+        path: /etc/apt/sources.list.d/google-chrome.list
+        line: 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main'
+
+- name: Import Google Chrome signing key
+     apt_key:
+        url: https://dl.google.com/linux/linux_signing_key.pub
+        state: present
+
+- name: Install Google Chrome
+   apt:
+      name: google-chrome-stable
+      state: present
+
+- name: Download ChromeDriver
+    get_url:
+        url: https://storage.googleapis.com/chrome-for-testing-public/124.0.6367.91/linux64/chromedriver-linux64.zip
+        dest: /tmp/chromedriver-linux64.zip
+
+- name: Unzip ChromeDriver
+    unarchive:
+        src: /tmp/chromedriver-linux64.zip
+        dest: /tmp
+
+- name: Move ChromeDriver to /usr/local/bin
+    command: mv /tmp/chromedriver-linux64 /usr/local/bin/webdriver
+
+- name: Make ChromeDriver executable
+    command: chmod +x /usr/local/bin/webdriver
+# tasks file for chrome
