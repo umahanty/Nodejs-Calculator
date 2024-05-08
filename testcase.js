@@ -11,7 +11,7 @@ const { remote } = require('webdriverio');
 
   try {
     // Navigate to the calculator application
-    await browser.url('http://localhost:5000');
+    await browser.url('http://18.234.230.44:3000');
     await browser.pause(5000); // Wait for the page to load
     console.log("Navigation step completed successfully.");
 
@@ -37,7 +37,7 @@ const { remote } = require('webdriverio');
     });
     console.log("Addition operation step completed successfully.");
 
-    await browser.pause(5000); // Wait for the result
+    await browser.pause(3000); // Wait for the result
 
     // Validate the addition result
     let resultText = await browser.execute(() => {
@@ -101,7 +101,7 @@ const { remote } = require('webdriverio');
     });
     console.log("Multiplication operation step completed successfully.");
 
-    await browser.pause(5000); // Wait for the result
+    await browser.pause(3000); // Wait for the result
 
     // Validate the multiplication result
     resultText = await browser.execute(() => {
@@ -133,7 +133,7 @@ const { remote } = require('webdriverio');
     });
     console.log("Division operation step completed successfully.");
 
-    await browser.pause(5000); // Wait for the result
+    await browser.pause(3000); // Wait for the result
 
     // Validate the division result
     resultText = await browser.execute(() => {
