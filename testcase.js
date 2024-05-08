@@ -6,6 +6,10 @@ const { remote } = require('webdriverio');
     logLevel: 'trace', // For detailed logs
     capabilities: {
       browserName: 'chrome',
+      'goog:chromeOptions': {
+        binary: '/usr/bin/google-chrome-stable', // Specify the Chrome binary location
+        args: ['--headless', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'] // Example arguments for headless execution
+      }
     },
   });
 
