@@ -1,11 +1,25 @@
 ---
-
-- hosts: all
+- name: Provision Minikube Cluster
+  hosts: localhost
   become: true
-  var:
-    #variable needed during node install
-    ansible_become_pass: Rajraviojha
-    var_node: /tem
-  roles:
-    - prerequisites
-    - nodejs
+  tasks:
+    - name: Install prerequisites
+      package:
+        name:
+          - curl
+          - apt-transport-https
+          - virtualbox  # You can use other drivers based on your setup
+        state: present
+
+    - name: Install Minikube
+      command: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+      register: minikube_download
+
+    - name: Make Minikube executable
+      command: chmod +x ./minikube
+
+    - name: Move Minikube to /usr/local/bin
+      command: mv ./minikube /usr/local/bin/
+
+    - name: Start Minikube
+      command: minikube start
