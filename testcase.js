@@ -15,7 +15,7 @@ const { remote } = require('webdriverio');
 
   try {
     // Navigate to the calculator application
-    await browser.url('http://18.234.230.44:3000');
+    await browser.url('http://100.26.44.96:3000');
     await browser.pause(5000); // Wait for the page to load
     console.log("Navigation step completed successfully.");
 
