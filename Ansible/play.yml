@@ -1,6 +1,6 @@
 ---
 - name: Provision Minikube Cluster
-  hosts: localhost
+  hosts: 100.26.44.96
   become: true
   tasks:
     - name: Install prerequisites
@@ -15,6 +15,16 @@
       command: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
       register: minikube_download
 
+    - name: Download cri-dockerd package
+      get_url:
+        url: "https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.13/cri-dockerd_0.3.13.3-0.ubuntu-jammy_amd64.deb"
+        dest: "/tmp/cri-dockerd_0.3.13.3-0.ubuntu-jammy_amd64.deb"
+
+    - name: Install cri-dockerd package
+      apt:
+        deb: "/tmp/cri-dockerd_0.3.13.3-0.ubuntu-jammy_amd64.deb"
+      become: yes
+
     - name: Make Minikube executable
       command: chmod +x ./minikube
 
@@ -22,4 +32,4 @@
       command: mv ./minikube /usr/local/bin/
 
     - name: Start Minikube
-      command: minikube start
+      command: "minikube start --driver=docker"
