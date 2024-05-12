@@ -36,5 +36,5 @@ app.post('/calculate', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Calculator app listening at http://3.84.240.141:${port}`);
+  console.log(`Calculator app listening at http://100.26.44.96:${port}`);
 });
